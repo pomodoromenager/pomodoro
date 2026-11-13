@@ -1,7 +1,7 @@
 // Minimalny service worker: pozwala zainstalować aplikację i pokazuje ekran startowy bez internetu.
 // Dane rozliczeń NIE są tu przechowywane – wszystko idzie prosto do Google Apps Script.
-const CACHE = 'pomodoro-rozliczenie-v1';
-const PLIKI = ['./', 'index.html', 'manifest.json', '../adres.js', '../ikony/rozliczenie-192.png', '../ikony/rozliczenie-512.png'];
+const CACHE = 'pomodoro-rozliczenie-v2';
+const PLIKI = ['./', 'index.html', 'manifest.json', '../adres.js', '../ikony/rozliczenie-192.png', '../ikony/rozliczenie-512.png', '../ikony/rozliczenie-ekran.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(PLIKI)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys().then(k => Promise.all(k.filter(n => n.startsWith('pomodoro-rozliczenie-') && n !== CACHE).map(n => caches.delete(n))))

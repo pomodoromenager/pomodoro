@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Pomodoro – Panel managera</title>
-<meta name="theme-color" content="#a93624">
+<meta name="theme-color" content="#1f2a3a">
 <meta name="description" content="Panel managera Pomodoro">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="../ikony/panel-192.png">
@@ -14,11 +14,11 @@
 <style>
   html,body{margin:0;height:100%;background:#fbf7f2;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
   #app{position:fixed;inset:0;width:100%;height:100%;border:0;display:block}
-  #ekran{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;
-    background:#a93624;color:#f3e9dc;text-align:center;padding:24px;transition:opacity .35s}
-  #ekran img{width:150px;height:150px;border-radius:28px;box-shadow:0 6px 24px rgba(0,0,0,.25)}
+  #ekran{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;
+    background:#1f2a3a;color:#d6beb0;text-align:center;padding:24px;transition:opacity .35s}
+  #ekran img{width:min(240px,62vw);height:auto}
   #ekran p{margin:0;font-size:16px;max-width:320px;line-height:1.45}
-  #ekran button{font:inherit;font-weight:600;padding:12px 26px;border-radius:12px;border:0;background:#f3e9dc;color:#a93624}
+  #ekran button{font:inherit;font-weight:600;padding:12px 26px;border-radius:12px;border:0;background:#d6beb0;color:#1f2a3a}
   .kropki::after{content:'';animation:k 1.2s steps(4) infinite}
   @keyframes k{0%{content:''}25%{content:'.'}50%{content:'..'}75%{content:'...'}}
   .ukryj{opacity:0;pointer-events:none}
@@ -27,7 +27,7 @@
 <body>
 <iframe id="app" title="Pomodoro – Panel managera" allow="clipboard-read; clipboard-write; fullscreen"></iframe>
 <div id="ekran">
-  <img src="../ikony/panel-512.png" alt="">
+  <img src="../ikony/panel-ekran.png" alt="Pomodoro">
   <p id="txt" class="kropki">Wczytywanie</p>
   <button id="ponow" type="button" hidden>Spróbuj ponownie</button>
 </div>
