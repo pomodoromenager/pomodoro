@@ -1,0 +1,17 @@
+POMODORO – aplikacja na telefon (nakładka na Google Apps Script)
+
+Co to jest: mała strona z ikoną, która otwiera formularz i panel z Apps Script na pełnym ekranie.
+Nie przechowuje żadnych danych – wszystko zapisuje się jak dotąd w arkuszu Google.
+
+Adresy po publikacji na GitHub Pages (LOGIN = Twoja nazwa użytkownika GitHub):
+  Formularz kelnera:  https://LOGIN.github.io/pomodoro/rozliczenie/
+  Panel managera:     https://LOGIN.github.io/pomodoro/panel/
+
+Pliki:
+  adres.js            – link do aplikacji Apps Script (/exec). Zmieniasz go tylko przy zupełnie NOWYM wdrożeniu.
+  rozliczenie/        – aplikacja „Rozliczenie” (formularz kelnera)
+  panel/              – aplikacja „Panel” (panel managera)
+  ikony/              – ikony aplikacji
+  index.html          – sam adres /pomodoro/ przekierowuje do formularza
+
+Wymaga w Kod.gs: setXFrameOptionsMode(ALLOWALL) w doGet (jest w wersji z 13.11.2026).

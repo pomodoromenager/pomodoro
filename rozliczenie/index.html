@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pomodoro – Rozliczenie kelnerskie</title>
+<meta name="theme-color" content="#a93624">
+<meta name="description" content="Formularz rozliczenia kelnerskiego Pomodoro">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="../ikony/rozliczenie-192.png">
+<link rel="apple-touch-icon" href="../ikony/rozliczenie-apple-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Rozliczenie">
+<style>
+  html,body{margin:0;height:100%;background:#fbf7f2;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  #app{position:fixed;inset:0;width:100%;height:100%;border:0;display:block}
+  #ekran{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;
+    background:#a93624;color:#f3e9dc;text-align:center;padding:24px;transition:opacity .35s}
+  #ekran img{width:150px;height:150px;border-radius:28px;box-shadow:0 6px 24px rgba(0,0,0,.25)}
+  #ekran p{margin:0;font-size:16px;max-width:320px;line-height:1.45}
+  #ekran button{font:inherit;font-weight:600;padding:12px 26px;border-radius:12px;border:0;background:#f3e9dc;color:#a93624}
+  .kropki::after{content:'';animation:k 1.2s steps(4) infinite}
+  @keyframes k{0%{content:''}25%{content:'.'}50%{content:'..'}75%{content:'...'}}
+  .ukryj{opacity:0;pointer-events:none}
+</style>
+</head>
+<body>
+<iframe id="app" title="Pomodoro – Rozliczenie kelnerskie" allow="clipboard-read; clipboard-write; fullscreen"></iframe>
+<div id="ekran">
+  <img src="../ikony/rozliczenie-512.png" alt="">
+  <p id="txt" class="kropki">Wczytywanie</p>
+  <button id="ponow" type="button" hidden>Spróbuj ponownie</button>
+</div>
+<script src="../adres.js"></script>
+<script>
+(function () {
+  var PARAM = '';
+  var ramka = document.getElementById('app'), ekran = document.getElementById('ekran'),
+      txt = document.getElementById('txt'), ponow = document.getElementById('ponow'), zegar = null;
+  function blad(t) {
+    clearTimeout(zegar);
+    ekran.classList.remove('ukryj'); txt.classList.remove('kropki'); txt.textContent = t; ponow.hidden = false;
+  }
+  function wczytaj() {
+    if (!window.POMODORO_URL) return blad('Brak adresu aplikacji w pliku adres.js.');
+    if (!navigator.onLine) return blad('Brak internetu. Włącz Wi-Fi lub dane komórkowe i spróbuj ponownie.');
+    ekran.classList.remove('ukryj'); txt.classList.add('kropki'); txt.textContent = 'Wczytywanie'; ponow.hidden = true;
+    clearTimeout(zegar);
+    zegar = setTimeout(function () { blad('Wczytywanie trwa wyjątkowo długo. Sprawdź internet i spróbuj ponownie.'); }, 25000);
+    ramka.onload = function () { clearTimeout(zegar); ekran.classList.add('ukryj'); };
+    // szybkie sprawdzenie połączenia z Google (bez tego przy braku sieci w ramce pokazałby się pusty błąd przeglądarki)
+    var stop = new AbortController(), t = setTimeout(function () { stop.abort(); }, 10000);
+    fetch('https://script.google.com/favicon.ico?t=' + Date.now(), { mode: 'no-cors', cache: 'no-store', signal: stop.signal })
+      .then(function () { clearTimeout(t); ramka.src = window.POMODORO_URL + PARAM; })
+      .catch(function () { clearTimeout(t); blad('Brak połączenia z internetem. Włącz Wi-Fi lub dane komórkowe i spróbuj ponownie.'); });
+  }
+  ponow.addEventListener('click', wczytaj);
+  window.addEventListener('online', function () { if (!ponow.hidden) wczytaj(); });
+  wczytaj();
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function () {});
+})();
+</script>
+</body>
+</html>
