@@ -1,6 +1,6 @@
 // Minimalny service worker: pozwala zainstalować aplikację i pokazuje ekran startowy bez internetu.
 // Dane rozliczeń NIE są tu przechowywane – wszystko idzie prosto do Google Apps Script.
-const CACHE = 'pomodoro-panel-v4';
+const CACHE = 'pomodoro-panel-v5';
 const PLIKI = ['./', 'index.html', 'manifest.json', '../adres.js', '../ikony/panel-192.png', '../ikony/panel-512.png', '../ikony/panel-ekran.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(PLIKI)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => {
